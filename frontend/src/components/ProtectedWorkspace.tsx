@@ -18,10 +18,11 @@ import {
   Upload,
   X,
 } from 'lucide-react';
+import Brand from '@/components/Brand';
 import { useAuth } from '@/lib/auth';
 
 const navigation = [
-  { label: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Claims', href: '/claims', icon: FileText },
   { label: 'Upload claim', href: '/upload', icon: Upload },
   { label: 'Appeals', href: '/appeals', icon: FileCheck2 },
@@ -30,7 +31,7 @@ const navigation = [
 ];
 
 function routeTitle(pathname: string): string {
-  if (pathname === '/') return 'Dashboard';
+  if (pathname === '/dashboard') return 'Dashboard';
   if (pathname.startsWith('/claims/new')) return 'New claim';
   if (pathname.includes('/edit')) return 'Edit claim';
   if (pathname.startsWith('/claims/')) return 'Claim details';
@@ -62,10 +63,7 @@ export default function ProtectedWorkspace({ children }: { children: ReactNode }
       {sidebarOpen && <button className="sidebar-backdrop" aria-label="Close menu" onClick={() => setSidebarOpen(false)} />}
       <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="brand">
-          <Link href="/" onClick={() => setSidebarOpen(false)}>
-            <span className="brand-icon"><ShieldCheck size={22} strokeWidth={2.2} /></span>
-            <span className="brand-copy"><strong>clarity</strong><small>CLAIM INTELLIGENCE</small></span>
-          </Link>
+          <Brand variant="workspace" href="/dashboard" onClick={() => setSidebarOpen(false)} />
           <button type="button" className="sidebar-close" aria-label="Close navigation" onClick={() => setSidebarOpen(false)}>
             <X size={18} />
           </button>
@@ -80,9 +78,7 @@ export default function ProtectedWorkspace({ children }: { children: ReactNode }
         <div className="nav-section-label">WORKSPACE</div>
         <nav className="side-nav" aria-label="Main navigation">
           {navigation.map(({ label, href, icon: Icon }) => {
-            const active = href === '/'
-              ? pathname === '/'
-              : pathname === href || (href === '/claims' && pathname.startsWith('/claims/'));
+            const active = pathname === href || (href === '/claims' && pathname.startsWith('/claims/'));
             return (
               <Link key={href} href={href} onClick={() => setSidebarOpen(false)} className={`side-nav-link ${active ? 'active' : ''}`}>
                 <Icon size={18} strokeWidth={1.8} />

@@ -5,8 +5,8 @@ import { ToastProvider } from '@/lib/toast';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Medical Billing Claim Denial Appeal Agent | Clarity',
-  description: 'A clear workspace for managing medical billing claims and denials.',
+  title: 'ClaimFlow AI',
+  description: 'Analyze denied medical claims, understand denial reasons, and organize your appeal workflow with ClaimFlow AI.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

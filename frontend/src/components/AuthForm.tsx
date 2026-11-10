@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, LoaderCircle, LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react';
+import Brand from '@/components/Brand';
 import { getApiError } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { useToast } from '@/lib/toast';
@@ -21,7 +22,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!loading && user) router.replace('/');
+    if (!loading && user) router.replace('/dashboard');
   }, [loading, user, router]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -45,7 +46,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
       if (isRegister) await register(name.trim(), email.trim(), password);
       else await login(email.trim(), password);
       showToast(isRegister ? 'Your account is ready.' : 'Welcome back.');
-      router.replace('/');
+      router.replace('/dashboard');
     } catch (requestError) {
       setError(getApiError(requestError, 'Unable to authenticate. Please try again.'));
     } finally {
@@ -55,7 +56,7 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
 
   return (
     <main className="auth-page">
-      <div className="auth-brand"><Link href="/"><span className="brand-icon"><ShieldCheck size={23} /></span><span className="brand-copy"><strong>clarity</strong><small>CLAIM INTELLIGENCE</small></span></Link></div>
+      <div className="auth-brand"><Brand variant="auth" /></div>
       <section className="auth-card">
         <div className="auth-symbol"><ShieldCheck size={24} /></div>
         <div className="eyebrow">{isRegister ? 'GET STARTED' : 'WELCOME BACK'}</div>
@@ -78,10 +79,10 @@ export default function AuthForm({ mode }: { mode: 'login' | 'register' }) {
           </button>
         </form>
 
-        <div className="auth-switch">{isRegister ? 'Already have an account?' : 'New to Clarity?'} <Link href={isRegister ? '/login' : '/register'}>{isRegister ? 'Sign in' : 'Create an account'}</Link></div>
+        <div className="auth-switch">{isRegister ? 'Already have an account?' : 'New to ClaimFlow AI?'} <Link href={isRegister ? '/login' : '/register'}>{isRegister ? 'Sign in' : 'Create an account'}</Link></div>
         <div className="auth-security"><LockKeyhole size={14} /> Your account is protected with encrypted authentication.</div>
       </section>
-      <footer className="auth-footer"><span>Clarity Health Systems</span><span>Privacy · Security · Support</span></footer>
+      <footer className="auth-footer"><span>ClaimFlow AI</span><span>Privacy · Security · Support</span></footer>
     </main>
   );
 }
