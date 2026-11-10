@@ -17,10 +17,7 @@ const port = Number(process.env.PORT || 5000);
 app.disable('x-powered-by');
 
 app.use(cors({
-  origin: [
-    'https://claim-denial-appeal-agent.vercel.app',
-    'https://claim-denial-appeal-agent-4dckk6emw-kajalk.vercel.app'
-  ],
+  origin: true,
   credentials: true
 }));
 
